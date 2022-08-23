@@ -154,6 +154,9 @@ public class Juego extends AggregateEvent<JuegoId> {
         appendChange(new RondaIniciada()).apply();
     }
 
+    public void iniciarJuego(){
+        appendChange(new JuegoIniciado()).apply();
+    }
 
     /**
      * Asignar cartas a ganador.
