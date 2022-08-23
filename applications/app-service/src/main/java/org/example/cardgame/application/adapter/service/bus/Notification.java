@@ -1,4 +1,4 @@
-package org.example.cardgame.application.adapter.bus;
+package org.example.cardgame.application.adapter.service.bus;
 
 import com.google.gson.Gson;
 

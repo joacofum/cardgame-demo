@@ -1,4 +1,4 @@
-package org.example.cardgame.application.adapter.bus;
+package org.example.cardgame.application.adapter.service.bus;
 
 
 import org.example.cardgame.application.ApplicationConfig;

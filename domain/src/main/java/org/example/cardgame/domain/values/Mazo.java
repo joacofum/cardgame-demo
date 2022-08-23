@@ -57,11 +57,12 @@ public class Mazo implements ValueObject<Mazo.Props> {
      * @return the mazo
      */
     public Mazo retirarCarta(Carta cartaRetirada) {
+        Set<Carta> cartaSet = new HashSet<>(catas);
         var cartaId = cartaRetirada.value().cartaId().value();
-        this.catas.removeIf(
+        cartaSet.removeIf(
                 carta -> cartaId.equals(carta.value().cartaId().value())
         );
-        return new Mazo(this.catas);
+        return new Mazo(cartaSet);
     }
 
     /**

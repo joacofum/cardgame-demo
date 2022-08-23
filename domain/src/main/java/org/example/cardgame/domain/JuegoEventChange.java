@@ -72,9 +72,5 @@ public class JuegoEventChange extends EventChange {
         apply((JuegoFinalizado event) -> {
             juego.ganador = juego.jugadores.get(event.getJugadorId());
         });
-
-        apply((JuegoIniciado event) ->{
-        });
-
     }
 }

@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -35,16 +36,28 @@ public class MazoMaterializeHandle {
 
     //TODO: handle Jugador Agregado
     @EventListener
-    public void handleJugadorAgregado(JugadorAgregado event) { }
+    public void handleJugadorAgregado(JugadorAgregado event) {
+
+    }
 
     //TODO: handle Carta Quitada Del Mazo
     @EventListener
-    public void handleCartaQuitadaDelMazo(CartaQuitadaDelMazo event){ }
+    public void handleCartaQuitadaDelMazo(CartaQuitadaDelMazo event){
+        var data = new HashMap<>();
+        data.put("_id", event.getCarta());
+        data.put("carta", event.getCarta());
+        template.save(data, COLLECTION_VIEW).block();
+    }
 
     //TODO: handle Cartas Asignadas A Jugador
     @EventListener
-    public void handleCartasAsignadasAJugador(CartasAsignadasAJugador event){ }
+    public void handleCartasAsignadasAJugador(CartasAsignadasAJugador event){
+        var data = new HashMap<>();
+        data.put("_id", event.getGanadorId());
+        data.put("puntos", event.getPuntos());
+        data.put("cartas", event.getCartasApuesta());
+        template.save(data, COLLECTION_VIEW).block();
 
-
+    }
 
 }

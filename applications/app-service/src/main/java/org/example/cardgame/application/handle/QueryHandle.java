@@ -41,11 +41,29 @@ public class QueryHandle {
 
     //TODO: obtener tablero
     @Bean
-    public RouterFunction<ServerResponse> getTablero() { return null; }
+    public RouterFunction<ServerResponse> getTablero() {
+        return route(
+                GET("/juego/getTablero/{id}").and(accept(MediaType.APPLICATION_JSON)),
+                request -> template.find(filterByUId(request.pathVariable("id")), JuegoListViewModel.class, "gameview")
+                        .collectList()
+                        .flatMap(list -> ServerResponse.ok()
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .body(BodyInserters.fromPublisher(Flux.fromIterable(list), JuegoListViewModel.class)))
+        );
+    }
 
     //TODO: obtener mazo
     @Bean
-    public RouterFunction<ServerResponse> getMazo() {return null;}
+    public RouterFunction<ServerResponse> getMazo() {
+        return route(
+            GET("/juego/getMazo/{id}").and(accept(MediaType.APPLICATION_JSON)),
+            request -> template.find(filterByUId(request.pathVariable("id")), JuegoListViewModel.class, "gameview")
+                    .collectList()
+                    .flatMap(list -> ServerResponse.ok()
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .body(BodyInserters.fromPublisher(Flux.fromIterable(list), JuegoListViewModel.class)))
+        );
+    }
 
     private Query filterByUId(String uid) {
         return new Query(

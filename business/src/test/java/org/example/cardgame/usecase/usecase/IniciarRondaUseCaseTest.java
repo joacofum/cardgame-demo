@@ -3,10 +3,11 @@ package org.example.cardgame.usecase.usecase;
 import co.com.sofka.domain.generic.DomainEvent;
 import org.example.cardgame.domain.command.IniciarRondaCommand;
 import org.example.cardgame.domain.events.JuegoCreado;
-import org.example.cardgame.domain.events.JuegoIniciado;
+import org.example.cardgame.domain.events.RondaCreada;
 import org.example.cardgame.domain.events.RondaIniciada;
 import org.example.cardgame.domain.events.TableroCreado;
 import org.example.cardgame.domain.values.JugadorId;
+import org.example.cardgame.domain.values.Ronda;
 import org.example.cardgame.domain.values.TableroId;
 import org.example.cardgame.usecase.gateway.JuegoDomainEventRepository;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,6 @@ import reactor.test.StepVerifier;
 
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 
@@ -60,7 +60,7 @@ class IniciarRondaUseCaseTest {
         var event2 = new TableroCreado(TableroId.of("LLLL"), Set.of(JugadorId.of("FFFF"), JugadorId.of("GGGG"), JugadorId.of("HHHH")));
         event2.setAggregateRootId("XXXX");
 
-        var event3 = new JuegoIniciado();
+        var event3 = new RondaCreada(new Ronda(1, Set.of(JugadorId.of("Gianni"), JugadorId.of("Mati"), JugadorId.of("Joaco"))), 80);
         event3.setAggregateRootId("XXXX");
 
         return Flux.just(event, event2, event3);
