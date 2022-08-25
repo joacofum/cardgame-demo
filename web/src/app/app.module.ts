@@ -21,7 +21,6 @@ import { HeaderComponent } from './componets/header/header.component'
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from 'src/environments/environment';
 import { getAuth, provideAuth } from '@angular/fire/auth';
-import { RegisterComponent } from './pages/register/register.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +31,6 @@ import { RegisterComponent } from './pages/register/register.component';
     HomeComponent,
     LoginComponent,
     HeaderComponent,
-    RegisterComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Auth } from '@angular/fire/auth';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -14,7 +13,7 @@ export class LoginComponent implements OnInit {
 
   formLogin: FormGroup;
 
-  constructor(private auth: Auth, private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router) {
     this.formLogin = new FormGroup({
       email: new FormControl(),
       password: new FormControl()
@@ -23,7 +22,7 @@ export class LoginComponent implements OnInit {
 
    ngOnInit():void{
    }
-   
+
    onclick(){
     this.authService.googleAuth()
     .then(resp =>{
