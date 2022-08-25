@@ -56,7 +56,7 @@ public class QueryHandle {
     @Bean
     public RouterFunction<ServerResponse> getMazo() {
         return route(
-            GET("/juego/getMazo/{id}").and(accept(MediaType.APPLICATION_JSON)),
+            GET("/juego/{id}/getMazo/{id}").and(accept(MediaType.APPLICATION_JSON)),
             request -> template.find(filterByUId(request.pathVariable("id")), JuegoListViewModel.class, "gameview")
                     .collectList()
                     .flatMap(list -> ServerResponse.ok()

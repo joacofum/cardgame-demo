@@ -74,12 +74,16 @@ class PonerCartaEnTableroUseCaseTest {
                 new Carta(CartaMaestraId.of("ggg"), 160,true,true)
         )));
 
-        var event3 = new TableroCreado(TableroId.of("XXXX")
-                , Set.of(JugadorId.of("MESSI"),
-                JugadorId.of("GGGG"),
-                JugadorId.of("HHHH")));
+        var event3 = new TableroCreado(TableroId.of("XXXX"),
+                Set.of(
+                        JugadorId.of("MESSI"),
+                        JugadorId.of("GGGG"),
+                        JugadorId.of("HHHH")
+                )
+        );
 
-        var event4 = new RondaCreada(new Ronda(1,
+        var event4 = new RondaCreada(
+                new Ronda(1,
                 Set.of(JugadorId.of("Gianni"),
                         JugadorId.of("Mati"),
                         JugadorId.of("Joaco"))),
@@ -93,7 +97,6 @@ class PonerCartaEnTableroUseCaseTest {
         event4.setAggregateRootId("XXXX");
         event5.setAggregateRootId("XXXX");
 
-
-        return Flux.just(event,event2,event3,event4,event5);
+        return Flux.just(event, event2, event3, event4, event5);
     }
 }

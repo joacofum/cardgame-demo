@@ -57,10 +57,22 @@ class IniciarRondaUseCaseTest {
         var event = new JuegoCreado(JugadorId.of("FFFF"));
         event.setAggregateRootId("XXXX");
 
-        var event2 = new TableroCreado(TableroId.of("LLLL"), Set.of(JugadorId.of("FFFF"), JugadorId.of("GGGG"), JugadorId.of("HHHH")));
+        var event2 = new TableroCreado(TableroId.of("LLLL"),
+                Set.of(
+                        JugadorId.of("FFFF"),
+                        JugadorId.of("GGGG"),
+                        JugadorId.of("HHHH")
+                )
+        );
         event2.setAggregateRootId("XXXX");
 
-        var event3 = new RondaCreada(new Ronda(1, Set.of(JugadorId.of("Gianni"), JugadorId.of("Mati"), JugadorId.of("Joaco"))), 80);
+        var event3 = new RondaCreada(
+                new Ronda(1,
+                        Set.of(JugadorId.of("Gianni"),
+                                JugadorId.of("Mati"),
+                                JugadorId.of("Joaco")
+                        )
+                ),80);
         event3.setAggregateRootId("XXXX");
 
         return Flux.just(event, event2, event3);

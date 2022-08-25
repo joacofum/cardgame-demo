@@ -26,10 +26,10 @@ public class PonerCartaEnTableroUseCase extends UseCaseForCommand<PonerCartaEnTa
                 .obtenerEventosPor(command.getJuegoId())
                 .collectList()
                 .flatMapIterable(events -> {
-                    var juego = Juego.from(JuegoId.of(command.getJuegoId()), events);
-                    var tableroId = juego.tablero().identity();
-                    var jugadorId = JugadorId.of(command.getJugadorId());
-                    var cartasDelJugador = juego.jugadores().get(jugadorId).mazo().value().cartas();
+                    var juego = Juego.from(JuegoId.of(command.getJuegoId()), events); //JUEGO CREADO
+                    var tableroId = juego.tablero().identity(); //TABLERO CREADO
+                    var jugadorId = JugadorId.of(command.getJugadorId()); //AÑADIR JUGADOR
+                    var cartasDelJugador = juego.jugadores().get(jugadorId).mazo().value().cartas(); //AÑADIR CARTAS AL JUGADOR
                     var cartaSeleccionado = seleccionarCarta(command.getCartaId(), cartasDelJugador);
 
                     validarCantidadDelJugador(juego, jugadorId);
@@ -41,7 +41,7 @@ public class PonerCartaEnTableroUseCase extends UseCaseForCommand<PonerCartaEnTa
     private void validarCantidadDelJugador(Juego juego, JugadorId jugadorId) {
         var cantidad = (long) juego.tablero().partida()
                 .get(jugadorId).size();
-        if (cantidad >= 2) {
+        if (cantidad > 2) {
             throw new IllegalArgumentException("No puede poner mas de 2 cartas en el tablero");
         }
     }

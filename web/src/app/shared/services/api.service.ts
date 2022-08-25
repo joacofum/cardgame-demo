@@ -30,11 +30,18 @@ export class ApiService {
   }
 
   //TODO: consulta de mis juegos
-  getMisJuegos(uid:string){}
+  getMisJuegos(uid:string){
+
+  }
 
   //TODO: consulta de mi mazo
-  getMiMazo(uid:string, juegoId:string){}
+  getMiMazo(uid:string, juegoId:string){
+
+  }
 
   //TODO: consulta tablero del juego
-  getTablero(juegoId:string){}
+  getTablero(juegoId:string){
+    
+  }
+
 }

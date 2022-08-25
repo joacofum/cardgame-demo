@@ -12,6 +12,10 @@ import { BoardComponent } from './pages/board/board.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { HeaderComponent } from './componets/header/header.component'
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { environment } from 'src/environments/environment';
+import { getAuth, provideAuth } from '@angular/fire/auth';
+import { RegisterComponent } from './pages/register/register.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,13 +24,17 @@ import { HeaderComponent } from './componets/header/header.component'
     BoardComponent,
     HomeComponent,
     LoginComponent,
-    HeaderComponent
+    HeaderComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    provideFirebaseApp(()=> initializeApp(environment.firebase)),
+    provideAuth(()=> getAuth())
+    
   ],
   providers: [ApiService],
   bootstrap: [AppComponent]
