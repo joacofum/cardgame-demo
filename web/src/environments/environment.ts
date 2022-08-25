@@ -12,7 +12,7 @@ export const environment = {
     messagingSenderId: '283729887039',
   },
   production: false,
-  apiBase: "http://localhost:8080",
+  apiBase: "http://localhost:8080"
 };
 
 /*

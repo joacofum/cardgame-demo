@@ -23,17 +23,9 @@ export class LoginComponent implements OnInit {
 
    ngOnInit():void{
    }
-
-   onSubmit(){
-    this.authService.login(this.formLogin.value)
-    .then(resp => {
-      console.log(resp)
-    })
-    .catch(err=>console.log(err));
-   }
    
    onclick(){
-    this.authService.loginWithGoogle()
+    this.authService.googleAuth()
     .then(resp =>{
       console.log(resp)
       this.router.navigate(['home'])

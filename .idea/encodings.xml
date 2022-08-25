@@ -8,10 +8,12 @@
     <file url="file://$PROJECT_DIR$/applications/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/applications/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/business/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/business/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/domain/src/main/java" charset="UTF-8" />
+<<<<<<< HEAD
     <file url="file://$PROJECT_DIR$/domain/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+=======
+>>>>>>> 7e3113b626aba839c6008f18ff0d9f702a37bd76
   </component>
 </project>
