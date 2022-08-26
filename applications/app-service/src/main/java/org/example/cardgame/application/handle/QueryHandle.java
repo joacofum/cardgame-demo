@@ -2,6 +2,8 @@ package org.example.cardgame.application.handle;
 
 
 import org.example.cardgame.application.handle.model.JuegoListViewModel;
+import org.example.cardgame.application.handle.model.MazoViewModel;
+import org.example.cardgame.application.handle.model.TableroViewModel;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
@@ -44,11 +46,11 @@ public class QueryHandle {
     public RouterFunction<ServerResponse> getTablero() {
         return route(
                 GET("/juego/getTablero/{id}").and(accept(MediaType.APPLICATION_JSON)),
-                request -> template.find(filterByUId(request.pathVariable("id")), JuegoListViewModel.class, "gameview")
+                request -> template.find(filterByUId(request.pathVariable("id")), TableroViewModel.class, "gameview")
                         .collectList()
                         .flatMap(list -> ServerResponse.ok()
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .body(BodyInserters.fromPublisher(Flux.fromIterable(list), JuegoListViewModel.class)))
+                                .body(BodyInserters.fromPublisher(Flux.fromIterable(list), TableroViewModel.class)))
         );
     }
 
@@ -56,12 +58,12 @@ public class QueryHandle {
     @Bean
     public RouterFunction<ServerResponse> getMazo() {
         return route(
-            GET("/juego/{id}/getMazo/{id}").and(accept(MediaType.APPLICATION_JSON)),
-            request -> template.find(filterByUId(request.pathVariable("id")), JuegoListViewModel.class, "gameview")
+            GET("/juego/{id}/getMazo/{uid}").and(accept(MediaType.APPLICATION_JSON)),
+            request -> template.find(filterByUIdAndJuegoId(request.pathVariable("id"),request.pathVariable("uid")), MazoViewModel.class, "gameview")
                     .collectList()
                     .flatMap(list -> ServerResponse.ok()
                             .contentType(MediaType.APPLICATION_JSON)
-                            .body(BodyInserters.fromPublisher(Flux.fromIterable(list), JuegoListViewModel.class)))
+                            .body(BodyInserters.fromPublisher(Flux.fromIterable(list), MazoViewModel.class)))
         );
     }
 
@@ -69,6 +71,13 @@ public class QueryHandle {
         return new Query(
                 Criteria.where("uid").is(uid)
         );
+    }
+
+    private Query filterByUIdAndJuegoId(String idJuego, String uid){
+        return new Query(
+                Criteria.where("uid").is(uid).and("id").is(idJuego)
+        );
+
     }
 
 

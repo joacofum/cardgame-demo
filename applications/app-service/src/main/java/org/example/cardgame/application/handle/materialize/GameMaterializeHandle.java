@@ -54,7 +54,7 @@ public class GameMaterializeHandle {
     @EventListener
     public void handleTableroCreado(TableroCreado event) {
         var data = new HashMap<>();
-        data.put("_id", event.getTableroId());
+        data.put("tableroId", event.getTableroId());
         data.put("jugadores", event.getJugadorIds());
         template.save(data, COLLECTION_VIEW).block();
     }
@@ -63,8 +63,8 @@ public class GameMaterializeHandle {
     @EventListener
     public void handleCartaPuestaEnTablero(CartaPuestaEnTablero event) {
         var data = new HashMap<>();
-        data.put("_tablero_id", event.getTableroId());
-        data.put("_jugador_id", event.getJugadorId());
+        data.put("tableroId", event.getTableroId());
+        data.put("uid", event.getJugadorId());
         data.put("_carta", event.getCarta());
         template.save(data, COLLECTION_VIEW).block();
     }
@@ -82,7 +82,7 @@ public class GameMaterializeHandle {
     @EventListener
     public void handleTiempoCambiadoDelTablero(TiempoCambiadoDelTablero event){
         var data = new Update();
-        data.set("_id", event.getTableroId());
+        data.set("tableroId", event.getTableroId());
         data.set("tiempo", event.getTiempo());
         template.updateFirst(getFilterByAggregateId(event), data, COLLECTION_VIEW).block();
     }
@@ -91,7 +91,7 @@ public class GameMaterializeHandle {
     @EventListener
     public void handleRondaTerminada(RondaTerminada event){
         var data = new HashMap<>();
-        data.put("_id", event.getTableroId());
+        data.put("tableroId", event.getTableroId());
         data.put("jugadores", event.getJugadorIds());
         template.save(data, COLLECTION_VIEW).block();
     }
@@ -107,7 +107,7 @@ public class GameMaterializeHandle {
     @EventListener
     public void handleJuegoFinalizado(JuegoFinalizado event){
         var data = new HashMap<>();
-        data.put("_id", event.getJugadorId());
+        data.put("uid", event.getJugadorId());
         data.put("alias", event.getAlias());
         template.save(data, COLLECTION_VIEW).block();
     }

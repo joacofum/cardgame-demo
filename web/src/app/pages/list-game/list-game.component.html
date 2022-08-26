@@ -1,1 +1,5 @@
-<p>list-game works!</p>
+<h1>Lista de juegos ñery</h1>
+<li *ngFor="let juego of misJuegos; index as i;">
+Juego {{i}}: Cantidad de jugadores: {{juego.cantidadJugadores}}
+<button (click)="iniciarJuego(juego.id)"> Iniciar Juego </button>
+</li>

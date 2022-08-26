@@ -1,5 +1,6 @@
 package org.example.cardgame.application.handle.materialize;
 
+import co.com.sofka.domain.generic.DomainEvent;
 import org.bson.Document;
 import org.example.cardgame.domain.events.CartaQuitadaDelMazo;
 import org.example.cardgame.domain.events.CartasAsignadasAJugador;
@@ -35,16 +36,20 @@ public class MazoMaterializeHandle {
     }
 
     //TODO: handle Jugador Agregado
-    @EventListener
+    /*@EventListener
     public void handleJugadorAgregado(JugadorAgregado event) {
-
-    }
+        var data = new HashMap<>();
+        data.put("fecha", Instant.now());
+        data.put("jugadores."+event.getJugadorId().value()+".alias", event.getAlias());
+        data.put("jugadores."+event.getJugadorId().value()+".jugadorId", event.getJugadorId().value());
+        template.save(data, COLLECTION_VIEW).block();
+    }*/
 
     //TODO: handle Carta Quitada Del Mazo
     @EventListener
     public void handleCartaQuitadaDelMazo(CartaQuitadaDelMazo event){
         var data = new HashMap<>();
-        data.put("_id", event.getCarta());
+        data.put("uid", event.getJugadorId());
         data.put("carta", event.getCarta());
         template.save(data, COLLECTION_VIEW).block();
     }
@@ -53,11 +58,16 @@ public class MazoMaterializeHandle {
     @EventListener
     public void handleCartasAsignadasAJugador(CartasAsignadasAJugador event){
         var data = new HashMap<>();
-        data.put("_id", event.getGanadorId());
+        data.put("uid", event.getGanadorId());
         data.put("puntos", event.getPuntos());
         data.put("cartas", event.getCartasApuesta());
         template.save(data, COLLECTION_VIEW).block();
+    }
 
+    private Query getFilterByAggregateId(DomainEvent event) {
+        return new Query(
+                Criteria.where("_id").is(event.aggregateRootId())
+        );
     }
 
 }
