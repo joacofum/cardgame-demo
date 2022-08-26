@@ -1,5 +1,5 @@
 /domain/target/
 /business/target/
 /applications/target/
-
+/web/.angular/
 /.idea/
