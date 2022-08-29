@@ -2,6 +2,7 @@ package org.example.cardgame.application.handle.materialize;
 
 import co.com.sofka.domain.generic.DomainEvent;
 
+import co.com.sofka.domain.generic.Identity;
 import org.example.cardgame.domain.events.*;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
@@ -13,6 +14,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 import java.time.Instant;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 @EnableAsync
 @Configuration
@@ -50,16 +52,18 @@ public class GameMaterializeHandle {
         template.updateFirst(getFilterByAggregateId(event), data, COLLECTION_VIEW).block();
     }
 
-    //TODO: handle tablero creado
     @EventListener
     public void handleTableroCreado(TableroCreado event) {
-        var data = new HashMap<>();
-        data.put("tableroId", event.getTableroId());
-        data.put("jugadores", event.getJugadorIds());
+        var data = new Update();
+        var jugadores = event.getJugadorIds().stream()
+                        .map(Identity::value)
+                        .collect(Collectors.toList());
+        data.set("fecha", Instant.now());
+        data.set("tablero.id", event.getTableroId());
+        data.set("jugadores", jugadores);
         template.save(data, COLLECTION_VIEW).block();
     }
 
-    //TODO: handle Carta Puesta En Tablero
     @EventListener
     public void handleCartaPuestaEnTablero(CartaPuestaEnTablero event) {
         var data = new HashMap<>();
@@ -69,7 +73,6 @@ public class GameMaterializeHandle {
         template.save(data, COLLECTION_VIEW).block();
     }
 
-    //TODO: handle para crear ronda
     @EventListener
     public void handleRondaCreada(RondaCreada event) {
         var data = new HashMap<>();
@@ -78,16 +81,15 @@ public class GameMaterializeHandle {
         template.save(data, COLLECTION_VIEW).block();
     }
 
-    //TODO: handle tiempo cambiado del tablero
     @EventListener
     public void handleTiempoCambiadoDelTablero(TiempoCambiadoDelTablero event){
         var data = new Update();
         data.set("tableroId", event.getTableroId());
         data.set("tiempo", event.getTiempo());
+        data.set("ronda.estaIniciada", true);
         template.updateFirst(getFilterByAggregateId(event), data, COLLECTION_VIEW).block();
     }
 
-    //TODO: handle para terminar la ronda
     @EventListener
     public void handleRondaTerminada(RondaTerminada event){
         var data = new HashMap<>();
@@ -96,14 +98,12 @@ public class GameMaterializeHandle {
         template.save(data, COLLECTION_VIEW).block();
     }
 
-    //TODO: handle para iniciar la ronda
     @EventListener
     public void handleRondaIniciada(RondaIniciada event){
         var data = new HashMap<>();
         template.save(data, COLLECTION_VIEW).block();
     }
 
-    //TODO: handle para finalizar evento
     @EventListener
     public void handleJuegoFinalizado(JuegoFinalizado event){
         var data = new HashMap<>();

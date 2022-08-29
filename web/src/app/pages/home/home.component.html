@@ -1,16 +1,17 @@
 <div class="cont">
-  <div class="homeContainer">
-    <div class="contenedor">
-      <div class="h4"><h4>Incio</h4></div>
-      <div class="contenido">
-        <h1>Indicaciones de Juego</h1>
-        <p>
-          Para iniciar el juego debes estar registrado, incluso los jugadores
-        </p>
-        <button type="button" (click)="newGame()">Crear Juego</button>
-      </div>
-      <div class="h4"><h4>Invita a tus amigos</h4></div>
-    </div>
-    <button (click)="gameList()">Consultar Juegos Creados</button>
-  </div>
+  <mat-card class="example-card">
+    <mat-card-header>
+      <mat-card-title>Inicio</mat-card-title>
+    </mat-card-header>
+    <mat-divider inset></mat-divider>
+    <mat-card-content>
+      <h3>Indicaciones de Juego</h3>
+      <p>Para iniciar el juego debes estar registrado, incluso los jugadores</p>
+        <button mat-raised-button color="primary" (click)="newGame()">Crear Juego</button>
+    </mat-card-content>
+    <mat-divider inset></mat-divider>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="gameList()">Consultar Juegos Creados</button>
+    </mat-card-actions>
+  </mat-card>
 </div>

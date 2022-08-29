@@ -36,6 +36,7 @@ public class CommandHandle {
                 request -> usecase.andThen(integrationHandle)
                         .apply(request.bodyToMono(IniciarJuegoCommand.class))
                         .then(ServerResponse.ok().build())
+                        .onErrorResume(errorHandler::badRequest)
         );
     }
 

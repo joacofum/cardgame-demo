@@ -36,38 +36,18 @@ public class MazoMaterializeHandle {
     }
 
     //TODO: handle Jugador Agregado
-    /*@EventListener
+    @EventListener
     public void handleJugadorAgregado(JugadorAgregado event) {
-        var data = new HashMap<>();
-        data.put("fecha", Instant.now());
-        data.put("jugadores."+event.getJugadorId().value()+".alias", event.getAlias());
-        data.put("jugadores."+event.getJugadorId().value()+".jugadorId", event.getJugadorId().value());
-        template.save(data, COLLECTION_VIEW).block();
-    }*/
+    }
 
     //TODO: handle Carta Quitada Del Mazo
     @EventListener
     public void handleCartaQuitadaDelMazo(CartaQuitadaDelMazo event){
-        var data = new HashMap<>();
-        data.put("uid", event.getJugadorId());
-        data.put("carta", event.getCarta());
-        template.save(data, COLLECTION_VIEW).block();
     }
 
     //TODO: handle Cartas Asignadas A Jugador
     @EventListener
-    public void handleCartasAsignadasAJugador(CartasAsignadasAJugador event){
-        var data = new HashMap<>();
-        data.put("uid", event.getGanadorId());
-        data.put("puntos", event.getPuntos());
-        data.put("cartas", event.getCartasApuesta());
-        template.save(data, COLLECTION_VIEW).block();
-    }
+    public void handleCartasAsignadasAJugador(CartasAsignadasAJugador event){}
 
-    private Query getFilterByAggregateId(DomainEvent event) {
-        return new Query(
-                Criteria.where("_id").is(event.aggregateRootId())
-        );
-    }
 
 }
