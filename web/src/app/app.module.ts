@@ -22,12 +22,14 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from 'src/environments/environment';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider'
 import { MatListModule } from '@angular/material/list'
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -57,7 +59,8 @@ import { MatListModule } from '@angular/material/list'
     MatCardModule,
     MatButtonModule,
     MatDividerModule,
-    MatListModule
+    MatListModule,
+    FormsModule,
   ],
   providers: [ApiService],
   bootstrap: [AppComponent]

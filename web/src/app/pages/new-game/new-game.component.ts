@@ -23,15 +23,14 @@ export class NewGameComponent implements OnInit, OnDestroy {
       jugador: new FormControl()
     });
     this.juegoId = uuidv1();
-     
+
     api.getJugadores().subscribe((jugadores) => {
       this.jugadores = jugadores;
      });
-     
+
      this.socket.open(this.juegoId)
-     
+
    }
- 
 
   ngOnInit(): void {
     this.socket.subscribe((event)=>{
@@ -47,7 +46,6 @@ export class NewGameComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(){
- 
     const jugadores: any = {};
     this.form.value.jugador.forEach((user:any) => {
       jugadores[user.uid] = user.alias;

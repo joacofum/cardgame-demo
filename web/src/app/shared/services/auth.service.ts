@@ -16,7 +16,7 @@ export class AuthService {
     public afAuth: AngularFireAuth,
     public router: Router,
   ) {
-    this.afAuth.authState.subscribe((user: any) => {
+    this.afAuth.authState.subscribe((user) => {
       if (user) {
         this.userData = user;
         localStorage.setItem('user', JSON.stringify(this.userData));
@@ -26,6 +26,7 @@ export class AuthService {
         JSON.parse(localStorage.getItem('user')!);
       }
     });
+
   }
 
 
@@ -45,7 +46,7 @@ export class AuthService {
     return this.authLogin(new firebase.auth.GoogleAuthProvider()).then((res: any) => {
       if (res) {
         console.log("google loging");
-        this.router.navigate(['home']);
+        window.location.href = "/home";
       }
     });
   }
@@ -54,8 +55,7 @@ export class AuthService {
     return this.afAuth
       .signInWithPopup(provider)
       .then((result: any) => {
-        this.setUserData(result.user);
-        this.router.navigate(['home']);
+        return this.setUserData(result.user);
       })
       .catch((error: any) => {
         window.alert(error);

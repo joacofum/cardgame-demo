@@ -47,8 +47,8 @@ public class GameMaterializeHandle {
     public void handleJugadorAgregado(JugadorAgregado event) {
         var data = new Update();
         data.set("fecha", Instant.now());
-        data.set("jugadores."+event.getJugadorId().value()+".alias", event.getAlias());
-        data.set("jugadores."+event.getJugadorId().value()+".jugadorId", event.getJugadorId().value());
+        data.set("jugadores." + event.getJugadorId().value() + ".alias", event.getAlias());
+        data.set("jugadores." + event.getJugadorId().value() + ".jugadorId", event.getJugadorId().value());
         data.inc("cantidadJugadores");
         template.updateFirst(getFilterByAggregateId(event), data, COLLECTION_VIEW).block();
     }
@@ -57,23 +57,17 @@ public class GameMaterializeHandle {
     public void handleTableroCreado(TableroCreado event) {
         var data = new Update();
         var jugadores = event.getJugadorIds().stream()
-                        .map(Identity::value)
-                        .collect(Collectors.toList());
-        data.set("fecha", Instant.now());
-        data.set("tablero.id", event.getTableroId());
-        data.set("jugadores", jugadores);
-        template.save(data, COLLECTION_VIEW).block();
-    }
+                .map(Identity::value)
+                .collect(Collectors.toList());
 
-    @EventListener
-    public void handleJuegoFinalizado(JuegoFinalizado event){
-        var data = new Update();
         data.set("fecha", Instant.now());
-        data.set("ganador.alias", event.getAlias());
-        data.set("ganador.jugadorId", event.getJugadorId().value());
-        data.set("finalizado", true);
-
-        template.updateFirst(getFilterByAggregateId(event),data, COLLECTION_VIEW).block();
+        data.set("tablero.id", event.getTableroId().value());
+        data.set("tablero.cartas", new HashMap<>());
+        data.set("tablero.jugadores", jugadores);
+        data.set("tablero.habilitado", false);
+        data.set("iniciado", true);
+        template.updateFirst(getFilterByAggregateId(event),data, COLLECTION_VIEW)
+                .block();
     }
 
     @EventListener
@@ -139,6 +133,17 @@ public class GameMaterializeHandle {
         var data = new Update();
         data.set("fecha", Instant.now());
         data.set("tablero.habilitado", true);
+
+        template.updateFirst(getFilterByAggregateId(event),data, COLLECTION_VIEW).block();
+    }
+
+    @EventListener
+    public void handleJuegoFinalizado(JuegoFinalizado event){
+        var data = new Update();
+        data.set("fecha", Instant.now());
+        data.set("ganador.alias", event.getAlias());
+        data.set("ganador.jugadorId", event.getJugadorId().value());
+        data.set("finalizado", true);
 
         template.updateFirst(getFilterByAggregateId(event),data, COLLECTION_VIEW).block();
     }

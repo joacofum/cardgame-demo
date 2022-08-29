@@ -1,12 +1,13 @@
 <h3>Crear Juego</h3>
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <mat-selection-list formControlName="jugador"  multiple>
-        <!--<option [ngValue]="null" disabled>Seleccione un jugador</option>-->
-        <mat-list-option *ngFor="let jugador of jugadores">
-         {{ jugador.alias }}
-        </mat-list-option>
-      </mat-selection-list>
-      <br />
-   <button button mat-raised-button color="primary" type="submit">Crear Juego</button>
-</form>
 
+<form [formGroup]="form">
+  <mat-selection-list formControlName="jugador">
+    <mat-list-option *ngFor="let jugador of jugadores" [value]="jugador">
+      {{ jugador.alias }}
+    </mat-list-option>
+  </mat-selection-list>
+  <br />
+  <button button mat-raised-button color="primary" (click)="onSubmit()">
+    Crear Juego
+  </button>
+</form>
