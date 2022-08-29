@@ -32,7 +32,7 @@ public class QueryHandle {
     @Bean
     public RouterFunction<ServerResponse> listarJuego() {
         return route(
-                GET("/juego/listar/{id}").and(accept(MediaType.APPLICATION_JSON)),
+                GET("/juego/listar/{id}"),
                 request -> template.find(filterByUId(request.pathVariable("id")), JuegoListViewModel.class, "gameview")
                         .collectList()
                         .flatMap(list -> ServerResponse.ok()
@@ -42,7 +42,6 @@ public class QueryHandle {
     }
 
 
-    //TODO: obtener tablero
     @Bean
     public RouterFunction<ServerResponse> getTablero() {
         return route(
@@ -54,12 +53,11 @@ public class QueryHandle {
         );
     }
 
-    //TODO: obtener mazo
     @Bean
     public RouterFunction<ServerResponse> getMazo() {
         return route(
             GET("/juego/{id}/getMazo/{uid}").and(accept(MediaType.APPLICATION_JSON)),
-            request -> template.findOne(filterByUIdAndId(request.pathVariable("id"),request.pathVariable("uid")), MazoViewModel.class, "gameview")
+            request -> template.findOne(filterByUIdAndId(request.pathVariable("id"),request.pathVariable("uid")), MazoViewModel.class, "mazoview")
                     .flatMap(element -> ServerResponse.ok()
                             .contentType(MediaType.APPLICATION_JSON)
                             .body(BodyInserters.fromPublisher(Mono.just(element), MazoViewModel.class)))
@@ -72,17 +70,17 @@ public class QueryHandle {
         );
     }
 
-    private Query filterById(String id) {
-        return new Query(
-                Criteria.where("_id").is(id)
-        );
-    }
-
     private Query filterByUIdAndId(String idJuego, String uid){
         return new Query(
                 Criteria.where("uid").is(uid).and("id").is(idJuego)
         );
 
+    }
+
+    private Query filterById(String juegoId) {
+        return new Query(
+                Criteria.where("_id").is(juegoId)
+        );
     }
 
 
