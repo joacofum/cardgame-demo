@@ -1,7 +1,7 @@
 /domain/target/
 /business/target/
 /applications/target/
-/web/.angular/
+/web/.angular
 /.idea/
 cardgame.iml
 applications/app-proxy/app-proxy.iml
