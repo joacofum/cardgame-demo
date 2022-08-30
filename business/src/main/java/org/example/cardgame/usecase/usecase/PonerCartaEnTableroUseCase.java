@@ -41,7 +41,7 @@ public class PonerCartaEnTableroUseCase extends UseCaseForCommand<PonerCartaEnTa
     private void validarCantidadDelJugador(Juego juego, JugadorId jugadorId) {
         var cantidad = (long) juego.tablero().partida()
                 .get(jugadorId).size();
-        if (cantidad > 2) {
+        if (cantidad >= 2) {
             throw new IllegalArgumentException("No puede poner mas de 2 cartas en el tablero");
         }
     }

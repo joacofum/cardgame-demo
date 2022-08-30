@@ -16,13 +16,12 @@ import {ApiService} from './shared/services/api.service';
 import { ListGameComponent } from './pages/list-game/list-game.component';
 import { BoardComponent } from './pages/board/board.component';
 import { HomeComponent } from './pages/home/home.component';
-import { LoginComponent } from './pages/login/login.component';
 import { HeaderComponent } from './componets/header/header.component'
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from 'src/environments/environment';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { LoginModule } from './login/login.module';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
@@ -38,7 +37,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input'
 import { CoolSocialLoginButtonsModule } from '@angular-cool/social-login-buttons';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,7 +44,6 @@ import { CoolSocialLoginButtonsModule } from '@angular-cool/social-login-buttons
     ListGameComponent,
     BoardComponent,
     HomeComponent,
-    LoginComponent,
     HeaderComponent,
   ],
   imports: [
@@ -76,8 +73,8 @@ import { CoolSocialLoginButtonsModule } from '@angular-cool/social-login-buttons
     MatCheckboxModule,
     MatInputModule,
     FormsModule,
-    CoolSocialLoginButtonsModule
-
+    LoginModule,
+    CoolSocialLoginButtonsModule,
   ],
   providers: [ApiService],
   bootstrap: [AppComponent]
