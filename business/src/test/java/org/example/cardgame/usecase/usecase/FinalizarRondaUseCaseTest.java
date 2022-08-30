@@ -16,7 +16,6 @@ import reactor.test.StepVerifier;
 
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -60,7 +59,7 @@ class FinalizarRondaUseCaseTest {
     }
 
     private Flux<DomainEvent> historico() {
-        var event = new JuegoCreado(JugadorId.of("FFFF"));
+        var event = new JuegoCreado(JugadorId.of("AAAA"));
         event.setAggregateRootId("XXXX");
 
         var event2 = new JugadorAgregado(
