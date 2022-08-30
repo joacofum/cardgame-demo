@@ -30,7 +30,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider'
 import { MatListModule } from '@angular/material/list'
 import { FormsModule } from '@angular/forms';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatTableModule } from '@angular/material/table';
+
 import { CoolSocialLoginButtonsModule } from '@angular-cool/social-login-buttons';
+
 
 @NgModule({
   declarations: [
@@ -61,6 +65,8 @@ import { CoolSocialLoginButtonsModule } from '@angular-cool/social-login-buttons
     MatButtonModule,
     MatDividerModule,
     MatListModule,
+    MatGridListModule,
+    MatTableModule,
     FormsModule,
     CoolSocialLoginButtonsModule
   ],

@@ -42,7 +42,7 @@ class IniciarCuentaRegresivaUseCaseTest {
                 .thenReturn(historico());
 
         //FALTA LO DEL CASO DE USO
-        
+
         StepVerifier
                 .create(useCase.apply(Mono.just(event)))
                 .expectNextMatches(domainEvent -> {

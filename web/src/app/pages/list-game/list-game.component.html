@@ -1,6 +1,8 @@
 <mat-divider class="xd1"></mat-divider>
-<li *ngFor="let juego of misJuegos; index as i;">
-Juego {{i+1}}: Cantidad de jugadores: {{juego.cantidadJugadores}}
-<button mat-raised-button color="primary" (click)="iniciarJuego(juego.id)"> Iniciar Juego </button>
-<mat-divider class="xd2"></mat-divider>
+<li *ngFor="let juego of misJuegos; index as i">
+  Juego {{ i + 1 }}: Cantidad de jugadores: {{ juego.cantidadJugadores }}
+  <button mat-raised-button color="primary" (click)="iniciarJuego(juego.id)">
+    Iniciar Juego
+  </button>
+  <mat-divider class="xd2"></mat-divider>
 </li>
