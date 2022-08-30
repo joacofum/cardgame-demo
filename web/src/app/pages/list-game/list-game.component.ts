@@ -21,7 +21,7 @@ export class ListGameComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    //this.ws.close();
+    this.ws.close();
   }
 
   ngOnInit(): void {
@@ -43,7 +43,7 @@ export class ListGameComponent implements OnInit, OnDestroy {
           juegoId: id,
           tiempo: 80,
           jugadores: event.jugadorIds.map((it: any) => it.uuid)
-        })
+        }).subscribe();
       }
       if (event.type == 'cardgame.rondacreada') {
          this.router.navigate(['board/' + id]);
