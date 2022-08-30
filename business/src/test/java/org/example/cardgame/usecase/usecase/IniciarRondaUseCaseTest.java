@@ -68,9 +68,9 @@ class IniciarRondaUseCaseTest {
 
         var event3 = new RondaCreada(
                 new Ronda(1,
-                        Set.of(JugadorId.of("Gianni"),
-                                JugadorId.of("Mati"),
-                                JugadorId.of("Joaco")
+                        Set.of(JugadorId.of("FFFF"),
+                                JugadorId.of("GGGG"),
+                                JugadorId.of("HHHH")
                         )
                 ),80);
         event3.setAggregateRootId("XXXX");
