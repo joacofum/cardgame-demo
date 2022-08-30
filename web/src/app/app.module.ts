@@ -32,7 +32,10 @@ import { MatListModule } from '@angular/material/list'
 import { FormsModule } from '@angular/forms';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTableModule } from '@angular/material/table';
-
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatInputModule } from '@angular/material/input'
 import { CoolSocialLoginButtonsModule } from '@angular-cool/social-login-buttons';
 
 
@@ -67,8 +70,14 @@ import { CoolSocialLoginButtonsModule } from '@angular-cool/social-login-buttons
     MatListModule,
     MatGridListModule,
     MatTableModule,
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    MatListModule,
+    MatCheckboxModule,
+    MatInputModule,
     FormsModule,
     CoolSocialLoginButtonsModule
+
   ],
   providers: [ApiService],
   bootstrap: [AppComponent]

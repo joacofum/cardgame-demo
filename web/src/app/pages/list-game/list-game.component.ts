@@ -1,40 +1,54 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { JuegoModel } from 'src/app/shared/model/juego';
 import { WebsocketService } from 'src/app/shared/services/websocket.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
-//TODO: componente para el listado de mis juegos
 @Component({
   selector: 'app-list-game',
   templateUrl: './list-game.component.html',
   styleUrls: ['./list-game.component.scss'],
 })
-export class ListGameComponent implements OnInit {
-  misJuegos?: JuegoModel[];
-  uid: string = JSON.parse(localStorage.getItem('user')!).uid;
-
+export class ListGameComponent implements OnInit, OnDestroy {
+  displayedColumns: string[] = ['alias', 'cantidad', 'iniciado', 'id'];
+  dataSource: JuegoModel[] = [];
   constructor(
-    private api: ApiService,
-    private router: Router,
-    private socket: WebsocketService
-  ) {
-    this.api.getMisJuegos(this.uid).subscribe((juegos: any) => {
-      this.misJuegos = juegos;
+    public api: ApiService,
+    public authService: AuthService,
+    public ws: WebsocketService,
+    public router: Router) {
+  }
+
+  ngOnDestroy(): void {
+    //this.ws.close();
+  }
+
+  ngOnInit(): void {
+    this.api.getMisJuegos(this.authService.user.uid).subscribe((elements) => {
+      this.dataSource = elements;
     });
   }
 
-  ngOnInit(): void {}
+  entrar(id: string) {
+    this.router.navigate(['board', id]);
+  }
 
-  iniciarJuego(juegoId: string) {
-    this.socket.open(juegoId);
-    this.socket.subscribe((event) => {
+  iniciar(id: string) {
+    this.ws.connect(id);
+    this.ws.subscribe((event) => {
       console.log(event);
       if (event.type == 'cardgame.tablerocreado') {
-        this.router.navigate(['board']);
+        this.api.crearRonda({
+          juegoId: id,
+          tiempo: 80,
+          jugadores: event.jugadorIds.map((it: any) => it.uuid)
+        })
       }
-    });
-
-    this.api.iniciarJuego({juegoId}).subscribe()
-  }
+      if (event.type == 'cardgame.rondacreada') {
+         this.router.navigate(['board/' + id]);
+        }
+      });
+      this.api.iniciarJuego({ juegoId: id }).subscribe();
+    }
 }

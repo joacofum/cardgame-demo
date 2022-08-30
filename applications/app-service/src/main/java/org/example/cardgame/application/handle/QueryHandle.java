@@ -11,7 +11,9 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.reactive.function.server.RequestPredicates;
 import org.springframework.web.reactive.function.server.RouterFunction;
+import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -55,33 +57,23 @@ public class QueryHandle {
 
     @Bean
     public RouterFunction<ServerResponse> getMazo() {
-        return route(
-            GET("/juego/{id}/getMazo/{uid}").and(accept(MediaType.APPLICATION_JSON)),
-            request -> template.findOne(filterByUIdAndId(request.pathVariable("id"),request.pathVariable("uid")), MazoViewModel.class, "mazoview")
-                    .flatMap(element -> ServerResponse.ok()
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .body(BodyInserters.fromPublisher(Mono.just(element), MazoViewModel.class)))
-        );
+        return RouterFunctions.route(RequestPredicates.GET("/juego/mazo/{uid}/{juegoId}"), (request) -> {
+            return this.template.findOne(this.filterByUidAndId(request.pathVariable("uid"), request.pathVariable("juegoId")), MazoViewModel.class, "mazoview").flatMap((element) -> {
+                return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).body(BodyInserters.fromPublisher(Mono.just(element), MazoViewModel.class));
+            });
+        });
     }
 
     private Query filterByUId(String uid) {
-        return new Query(
-                Criteria.where("uid").is(uid)
-        );
-    }
-
-    private Query filterByUIdAndId(String idJuego, String uid){
-        return new Query(
-                Criteria.where("uid").is(uid).and("id").is(idJuego)
-        );
-
+        return new Query(Criteria.where("uid").is(uid));
     }
 
     private Query filterById(String juegoId) {
-        return new Query(
-                Criteria.where("_id").is(juegoId)
-        );
+        return new Query(Criteria.where("_id").is(juegoId));
     }
 
+    private Query filterByUidAndId(String uid, String juegoId) {
+        return new Query(Criteria.where("juegoId").is(juegoId).and("uid").is(uid));
+    }
 
 }

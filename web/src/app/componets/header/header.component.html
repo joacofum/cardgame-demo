@@ -2,7 +2,7 @@
   <span> Cardgame</span>
   <span class="example-spacer"></span>
   <button *ngIf="auth.isLoggedIn;" mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-    <img src= {{auth.user.photoURL}} referrerpolicy="no-referrer" alt="Avatar">
+    <img (click)="menu()" src= {{auth.user.photoURL}} referrerpolicy="no-referrer" alt="Avatar">
   </button>
   <button *ngIf="auth.isLoggedIn;" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon" >
     <mat-icon (click)="auth.signOut()">logout</mat-icon>

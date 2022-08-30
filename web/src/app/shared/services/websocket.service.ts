@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { webSocket } from 'rxjs/webSocket';
 import { environment } from 'src/environments/environment';
 
-//TODO: servicio para manejar websocker
-
 export interface EventHandle{
   (event:any):void;
 }
@@ -14,11 +12,12 @@ export interface EventHandle{
 export class WebsocketService {
   subject: any
 
-  constructor() { 
+  constructor() {
   }
 
-  open(juegoId: string){
+  connect(juegoId: string){
     this.subject = webSocket(environment.socketBase + juegoId);
+    return this.subject;
   }
 
   subscribe(callback: EventHandle){
@@ -34,3 +33,4 @@ export class WebsocketService {
   }
 
 }
+
