@@ -80,13 +80,16 @@ export class BoardComponent implements OnInit, OnDestroy {
 
         if(event.type === 'cardgame.rondaterminada'){
           this.roundStarted = false;
+          //Las cartas a 0.
+          //Apostar cartas solo cuando inicie la ronda
+
           //window.location.reload();
         }
 
         if(event.type === 'cardgame.juegofinalizado'){
           //ALERTA
           if(confirm("El ganador es " + event.alias)){
-            this.router.navigate(['list'])
+            this.router.navigate(['home'])
           }
         }
 

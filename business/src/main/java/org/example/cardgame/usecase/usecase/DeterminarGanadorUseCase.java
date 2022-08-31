@@ -11,7 +11,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.stream.Collectors;
 
-public class DeterminarGanadorUseCase  extends UseCaseForEvent<RondaTerminada> {
+public class DeterminarGanadorUseCase extends UseCaseForEvent<RondaTerminada> {
     private final JuegoDomainEventRepository repository;
 
     public DeterminarGanadorUseCase(JuegoDomainEventRepository repository){

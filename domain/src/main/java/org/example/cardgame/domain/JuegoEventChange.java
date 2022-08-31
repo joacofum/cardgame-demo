@@ -62,6 +62,7 @@ public class JuegoEventChange extends EventChange {
         apply((RondaTerminada event) -> {
             juego.ronda = juego.ronda.terminarRonda();
             juego.tablero.inhabilitarApuesta();
+            juego.tablero.reiniciarPartida();
         });
 
         apply((CartasAsignadasAJugador event) -> {
