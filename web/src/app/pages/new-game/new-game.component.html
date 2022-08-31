@@ -1,6 +1,4 @@
 
-<h3>Crear Juego</h3>
-
 <!-- <form [formGroup]="form">
   <mat-selection-list formControlName="jugador">
     <mat-list-option *ngFor="let jugador of jugadores" [value]="jugador">
@@ -24,7 +22,7 @@
                 </div>
                 <p>Invite a los jugadores a participar del juego</p>
                 <mat-form-field class="example-full-width">
-                    <input type="text" placeholder="Selecciones jugadores" aria-label="Selecciones jugadores" matInput
+                    <input type="text" placeholder="Seleccione jugadores" aria-label="Seleccione jugadores" matInput
                         [matAutocomplete]="auto" [formControl]="userControl" #userInput>
                     <mat-hint>Ingrese el nombre del jugador </mat-hint>
                 </mat-form-field>
@@ -42,7 +40,7 @@
 
                 <br><br>
 
-                <label>Jugadores Seleccionados:</label>
+                <label>Jugadores seleccionados:</label>
                 <mat-list dense>
                     <mat-list-item *ngIf="selectedUsers?.length === 0">(None)</mat-list-item>
                     <mat-list-item *ngFor="let user of selectedUsers">

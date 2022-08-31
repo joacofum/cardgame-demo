@@ -57,11 +57,13 @@ public class QueryHandle {
 
     @Bean
     public RouterFunction<ServerResponse> getMazo() {
-        return RouterFunctions.route(RequestPredicates.GET("/juego/mazo/{uid}/{juegoId}"), (request) -> {
-            return this.template.findOne(this.filterByUidAndId(request.pathVariable("uid"), request.pathVariable("juegoId")), MazoViewModel.class, "mazoview").flatMap((element) -> {
-                return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).body(BodyInserters.fromPublisher(Mono.just(element), MazoViewModel.class));
-            });
-        });
+        return route(
+                GET("/juego/mazo/{uid}/{juegoId}"),
+                request -> template.findOne(filterByUidAndId(request.pathVariable("uid"), request.pathVariable("juegoId")), MazoViewModel.class, "mazoview")
+                        .flatMap(element -> ServerResponse.ok()
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .body(BodyInserters.fromPublisher(Mono.just(element), MazoViewModel.class)))
+        );
     }
 
     private Query filterByUId(String uid) {

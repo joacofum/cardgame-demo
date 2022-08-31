@@ -5,13 +5,6 @@ import { ApiService } from 'src/app/shared/services/api.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { WebsocketService } from 'src/app/shared/services/websocket.service';
 
-/*export interface Tile {
-  color: string;
-  cols: number;
-  rows: number;
-  text: string;
-}*/
-
 //TODO: componente para el tablero de juego
 @Component({
   selector: 'app-board',
@@ -21,13 +14,6 @@ import { WebsocketService } from 'src/app/shared/services/websocket.service';
 
 
 export class BoardComponent implements OnInit, OnDestroy {
-
-  /*tiles: Tile[] = [
-    {text: 'Número de jugadores, Tiempo de ronda, Botón de iniciar', cols: 3, rows: 1, color: 'lightblue'},
-    {text: 'Mazo con cartas', cols: 1, rows: 10, color: 'lightgreen'},
-    {text: 'Partida', cols: 3, rows: 9, color: 'lightpink'},
-  ];*/
-
   cartasDelJugador: Carta[] = [];
   cartasDelTablero: Carta[] = [];
   tiempo: number = 0;
@@ -42,7 +28,9 @@ export class BoardComponent implements OnInit, OnDestroy {
     public api: ApiService,
     public authService: AuthService,
     public ws: WebsocketService,
-    private route: ActivatedRoute){}
+    private route: ActivatedRoute,
+    private router: Router
+  ){}
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
@@ -53,7 +41,6 @@ export class BoardComponent implements OnInit, OnDestroy {
       });
 
       this.api.getTablero(this.juegoId).subscribe((element) => {
-
         this.cartasDelTablero = Object.entries(element.tablero.cartas).flatMap((a: any) => {
           return a[1];
         });
@@ -84,6 +71,11 @@ export class BoardComponent implements OnInit, OnDestroy {
 
         if(event.type === 'cardgame.rondainiciada'){
           this.roundStarted = true;
+          //Se supone que cuando inicia una nueva ronda hay que setear los datos de la nueva ronda.
+          this.tiempo = event.tiempo;
+          this.jugadoresRonda = event.ronda.jugadores.length;
+          this.jugadoresTablero = event.tablero.jugadores.length;
+          this.numeroRonda = event.ronda.numero;
         }
 
         if(event.type === 'cardgame.rondaterminada'){
@@ -94,12 +86,13 @@ export class BoardComponent implements OnInit, OnDestroy {
         if(event.type === 'cardgame.juegofinalizado'){
           //ALERTA
           if(confirm("El ganador es " + event.alias)){
-            window.location.reload();
+            this.router.navigate(['list'])
           }
         }
 
         if(event.type === 'cardgame.cartasasignadasajugador'){
-
+          console.log(event)
+          event.ganadorId.uuid === this.uid ? alert("Ganaste la ronda!") : alert("Perdiste la ronda :(");
         }
 
       })
