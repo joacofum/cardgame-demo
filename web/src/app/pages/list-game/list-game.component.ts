@@ -26,7 +26,7 @@ export class ListGameComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.api.getMisJuegos(this.authService.user.uid).subscribe((elements) => {
-      this.dataSource = elements;
+      this.dataSource = elements.filter(el => !el.finalizado)
     });
   }
 
@@ -41,12 +41,12 @@ export class ListGameComponent implements OnInit, OnDestroy {
       if (event.type == 'cardgame.tablerocreado') {
         this.api.crearRonda({
           juegoId: id,
-          tiempo: 80,
+          tiempo: 10,
           jugadores: event.jugadorIds.map((it: any) => it.uuid)
         }).subscribe();
       }
       if (event.type == 'cardgame.rondacreada') {
-         this.router.navigate(['board/' + id]);
+         this.router.navigate(['board', id]);
         }
       });
       this.api.iniciarJuego({ juegoId: id }).subscribe();

@@ -63,35 +63,46 @@ export class BoardComponent implements OnInit, OnDestroy {
         this.numeroRonda = element.ronda.numero;
       });
 
-      this.ws.connect(this.juegoId).subscribe({
-        next: (event:any) => {
-          if (event.type === 'cardgame.ponercartaentablero') {
-            this.cartasDelTablero.push({
-              cartaId: event.carta.cartaId.uuid,
-              poder: event.carta.poder,
-              estaOculta: event.carta.estaOculta,
-              estaHabilitada: event.carta.estaHabilitada,
-            });
-          }
-          if (event.type === 'cardgame.cartaquitadadelmazo') {
-            this.cartasDelJugador = this.cartasDelJugador
-              .filter((item) => item.cartaId !==  event.carta.cartaId.uuid);
-          }
-          if (event.type === 'cardgame.tiempocambiadodeltablero') {
-            this.tiempo = event.tiempo;
-          }
+      this.ws.connect(this.juegoId);
+      this.ws.subscribe((event) => {
+        console.log(event);
+        if (event.type === 'cardgame.ponercartaentablero') {
+          this.cartasDelTablero.push({
+            cartaId: event.carta.cartaId.uuid,
+            poder: event.carta.poder,
+            estaOculta: event.carta.estaOculta,
+            estaHabilitada: event.carta.estaHabilitada,
+          });
+        }
+        if (event.type === 'cardgame.cartaquitadadelmazo') {
+          this.cartasDelJugador = this.cartasDelJugador
+            .filter((item) => item.cartaId !==  event.carta.cartaId.uuid);
+        }
+        if (event.type === 'cardgame.tiempocambiadodeltablero') {
+          this.tiempo = event.tiempo;
+        }
 
-          if(event.type === 'cardgame.rondainiciada'){
-            this.roundStarted = true;
-          }
+        if(event.type === 'cardgame.rondainiciada'){
+          this.roundStarted = true;
+        }
 
-          if(event.type === 'cargame.rondaterminada'){
-            this.roundStarted = false;
+        if(event.type === 'cardgame.rondaterminada'){
+          this.roundStarted = false;
+          //window.location.reload();
+        }
+
+        if(event.type === 'cardgame.juegofinalizado'){
+          //ALERTA
+          if(confirm("El ganador es " + event.alias)){
+            window.location.reload();
           }
-        },
-        error: (err:any) => console.log(err),
-        complete: () => console.log('complete')
-      });
+        }
+
+        if(event.type === 'cardgame.cartasasignadasajugador'){
+
+        }
+
+      })
     });
   }
 
