@@ -1,5 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DialogComponent } from 'src/app/componets/dialog/dialog.component';
 import { Carta } from 'src/app/shared/model/mazo';
 import { ApiService } from 'src/app/shared/services/api.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -30,8 +32,27 @@ export class BoardComponent implements OnInit, OnDestroy {
     public authService: AuthService,
     public ws: WebsocketService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog
   ){}
+
+  openDialog(enterAnimationDuration: string, exitAnimationDuration: string, alias: string): void {
+    let dialogRef = this.dialog.open(DialogComponent, {
+      width: '400px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: {
+        titulo: "Juego finalizado",
+        contenido: "El ganador es " + alias,
+        contexto: "Ganador"
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result === "ganador")
+        this.router.navigate(['home'])
+    });
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
@@ -62,10 +83,12 @@ export class BoardComponent implements OnInit, OnDestroy {
             estaHabilitada: event.carta.estaHabilitada,
           });
         }
+
         if (event.type === 'cardgame.cartaquitadadelmazo') {
           this.cartasDelJugador = this.cartasDelJugador
             .filter((item) => item.cartaId !==  event.carta.cartaId.uuid);
         }
+
         if (event.type === 'cardgame.tiempocambiadodeltablero') {
           this.tiempo = event.tiempo;
         }
@@ -92,9 +115,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
         if(event.type === 'cardgame.juegofinalizado'){
           //ALERTA
-          if(confirm("El ganador es " + event.alias)){
-            this.router.navigate(['home'])
-          }
+          this.openDialog('0ms', '0ms', event.alias);
         }
 
         if(event.type === 'cardgame.cartasasignadasajugador'){

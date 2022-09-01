@@ -31,7 +31,7 @@ class CrearJuegoUseCaseTest {
         var command = new CrearJuegoCommand();
         command.setJuegoId("XXXX");
         command.setJugadores(new HashMap<>());
-        command.getJugadores().put("FFF", "Gianni");
+        command.getJugadores().put("FFFF", "Gianni");
         command.getJugadores().put("GGGG", "Matias");
         command.getJugadores().put("HHHH", "Joaco");
         command.setJugadorPrincipalId("FFFF");

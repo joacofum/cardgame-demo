@@ -28,14 +28,17 @@ export class ListGameComponent implements OnInit, OnDestroy {
       width: '400px',
       enterAnimationDuration,
       exitAnimationDuration,
-      data: { id }
+      data: {
+        titulo: "Eliminar juego",
+        contenido: `¿Está seguro de que desea eliminar el juego?`,
+        contexto: "Eliminar",
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if(result === "eliminar")
         this.eliminarJuego(id)
     });
-
   }
 
   ngOnDestroy(): void {

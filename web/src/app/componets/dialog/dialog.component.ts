@@ -10,7 +10,13 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class DialogComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<DialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: {id: string}
+    @Inject(MAT_DIALOG_DATA) public data: {
+      id: string,
+      ganador: string,
+      titulo: string,
+      contenido: string,
+      contexto: string
+    }
   ){}
 
   ngOnInit(): void {
@@ -18,6 +24,10 @@ export class DialogComponent implements OnInit {
 
   closeDialog() {
     this.dialogRef.close('eliminar');
+  }
+
+  redirigirHome(){
+    this.dialogRef.close('ganador');
   }
 
 }

@@ -1,8 +1,18 @@
-<h1 mat-dialog-title>Eliminar juego</h1>
-<div mat-dialog-content>
-  ¿Está seguro de que desea eliminar el juego ({{data.id | slice:0:8 }}) seleccionado?
+<h1 class = "titulo" mat-dialog-title> {{data.titulo}} </h1>
+
+<mat-divider></mat-divider>
+
+<div class="contenido" mat-dialog-content>
+  {{data.contenido}}
 </div>
-<div mat-dialog-actions>
+
+<mat-divider></mat-divider>
+
+<div class="diveliminarjuego" mat-dialog-actions *ngIf="data.contexto == 'Eliminar' ">
   <button mat-raised-button mat-dialog-close>No</button>
   <button mat-raised-button color="warn" (click)="closeDialog()" mat-dialog-close cdkFocusInitial>Sí</button>
+</div>
+
+<div mat-dialog-actions *ngIf="data.contexto == 'Ganador' ">
+  <button class="btnredirigir" mat-raised-button color="primary" (click)="redirigirHome()" mat-dialog-close cdkFocusInitial>Salir</button>
 </div>
