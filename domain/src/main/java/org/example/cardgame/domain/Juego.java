@@ -7,6 +7,7 @@ import org.example.cardgame.domain.values.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -55,6 +56,7 @@ public class Juego extends AggregateEvent<JuegoId> {
         super(id);
         subscribe(new JuegoEventChange(this));
     }
+
 
     /**
      * From juego.
@@ -184,6 +186,9 @@ public class Juego extends AggregateEvent<JuegoId> {
      */
     public void finalizarJuego(JugadorId jugadorId, String alias) {
         appendChange(new JuegoFinalizado(jugadorId, alias)).apply();
+    }
 
+    public void eliminarJuego(){
+        appendChange(new JuegoEliminado()).apply();
     }
 }

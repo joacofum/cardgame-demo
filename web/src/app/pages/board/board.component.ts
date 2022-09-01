@@ -23,6 +23,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   juegoId: string = "";
   uid: string = "";
   roundStarted:boolean = false;
+  tableroHabilitado:boolean = false;
 
   constructor(
     public api: ApiService,
@@ -69,21 +70,24 @@ export class BoardComponent implements OnInit, OnDestroy {
           this.tiempo = event.tiempo;
         }
 
-        if(event.type === 'cardgame.rondainiciada'){
-          this.roundStarted = true;
-          //Se supone que cuando inicia una nueva ronda hay que setear los datos de la nueva ronda.
+        if(event.type === 'cardgame.rondacreada'){
           this.tiempo = event.tiempo;
           this.jugadoresRonda = event.ronda.jugadores.length;
-          this.jugadoresTablero = event.tablero.jugadores.length;
           this.numeroRonda = event.ronda.numero;
+        }
+
+        if(event.type === 'cardgame.rondainiciada'){
+          this.tableroHabilitado = true;
+          this.roundStarted = true;
         }
 
         if(event.type === 'cardgame.rondaterminada'){
           this.roundStarted = false;
           //Las cartas a 0.
-          //Apostar cartas solo cuando inicie la ronda
+          this.cartasDelTablero = [];
 
-          //window.location.reload();
+          //Apostar cartas solo cuando inicie la ronda
+          this.tableroHabilitado = false;
         }
 
         if(event.type === 'cardgame.juegofinalizado'){
@@ -94,11 +98,23 @@ export class BoardComponent implements OnInit, OnDestroy {
         }
 
         if(event.type === 'cardgame.cartasasignadasajugador'){
-          console.log(event)
-          event.ganadorId.uuid === this.uid ? alert("Ganaste la ronda!") : alert("Perdiste la ronda :(");
+          if(event.ganadorId.uuid === this.uid){
+            event.cartasApuesta.forEach((carta: any) => {
+              this.cartasDelJugador.push({
+                cartaId: carta.cartaId.uuid,
+                poder: carta.poder,
+                estaOculta: carta.estaOculta,
+                estaHabilitada: carta.estaHabilitada
+              });
+            });
+            alert("Ganaste la ronda!")
+          }else{
+            alert("Perdiste la ronda :(")
+          }
         }
 
       })
+
     });
   }
 

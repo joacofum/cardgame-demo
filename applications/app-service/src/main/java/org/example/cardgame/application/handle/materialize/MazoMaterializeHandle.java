@@ -54,7 +54,6 @@ public class MazoMaterializeHandle {
             }
         });
         data.put("cartas", cartas);
-
         template.save(data, COLLECTION_VIEW).block();
     }
 

@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Eliminar juego</h1>
+<div mat-dialog-content>
+  ¿Está seguro de que desea eliminar el juego ({{data.id | slice:0:8 }}) seleccionado?
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button mat-dialog-close>No</button>
+  <button mat-raised-button color="warn" (click)="closeDialog()" mat-dialog-close cdkFocusInitial>Sí</button>
+</div>

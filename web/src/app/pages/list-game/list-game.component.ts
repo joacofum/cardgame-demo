@@ -4,6 +4,8 @@ import { ApiService } from 'src/app/shared/services/api.service';
 import { JuegoModel } from 'src/app/shared/model/juego';
 import { WebsocketService } from 'src/app/shared/services/websocket.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from 'src/app/componets/dialog/dialog.component';
 
 @Component({
   selector: 'app-list-game',
@@ -11,13 +13,29 @@ import { AuthService } from 'src/app/shared/services/auth.service';
   styleUrls: ['./list-game.component.scss'],
 })
 export class ListGameComponent implements OnInit, OnDestroy {
-  displayedColumns: string[] = ['alias', 'cantidad', 'iniciado', 'id'];
+  displayedColumns: string[] = ['id', 'cantidad', 'iniciado', 'accion', 'eliminar'];
   dataSource: JuegoModel[] = [];
+
   constructor(
     public api: ApiService,
     public authService: AuthService,
     public ws: WebsocketService,
-    public router: Router) {
+    public router: Router,
+    public dialog: MatDialog) {}
+
+  openDialog(enterAnimationDuration: string, exitAnimationDuration: string, id: string): void {
+    let dialogRef = this.dialog.open(DialogComponent, {
+      width: '400px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: { id }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result === "eliminar")
+        this.eliminarJuego(id)
+    });
+
   }
 
   ngOnDestroy(): void {
@@ -51,4 +69,17 @@ export class ListGameComponent implements OnInit, OnDestroy {
       });
       this.api.iniciarJuego({ juegoId: id }).subscribe();
     }
+
+    eliminarJuego(id: string){
+      this.ws.connect(id);
+      this.ws.subscribe((event) => {
+        console.log(event);
+        if (event.type == 'cardgame.juegoeliminado') {
+            this.dataSource = this.dataSource.filter((juego) => juego.id !== event.aggregateRootId);
+        }
+
+      });
+      this.api.eliminar({ juegoId: id }).subscribe();
+    }
+
 }

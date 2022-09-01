@@ -36,6 +36,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input'
 import { CoolSocialLoginButtonsModule } from '@angular-cool/social-login-buttons';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DialogComponent } from './componets/dialog/dialog.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,7 @@ import { CoolSocialLoginButtonsModule } from '@angular-cool/social-login-buttons
     BoardComponent,
     HomeComponent,
     HeaderComponent,
+    DialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -75,6 +78,7 @@ import { CoolSocialLoginButtonsModule } from '@angular-cool/social-login-buttons
     FormsModule,
     LoginModule,
     CoolSocialLoginButtonsModule,
+    MatDialogModule
   ],
   providers: [ApiService],
   bootstrap: [AppComponent]

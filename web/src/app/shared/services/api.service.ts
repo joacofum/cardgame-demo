@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { CrearJuegoCommand } from '../commands/crearJuegoCommand';
 import { CrearRondaCommand } from '../commands/crearRondaCommand';
+import { EliminarJuegoCommand } from '../commands/eliminarJuegoCommand';
 import { IniciarJuegoCommand } from '../commands/iniciarJuegoCommand';
 import { IniciarRondaCommand } from '../commands/iniciarRondaCommand';
 import { PonerCartaCommand } from '../commands/ponerCartaCommand';
@@ -64,5 +65,9 @@ export class ApiService {
 
   crearRonda(command: CrearRondaCommand){
     return this.http.post(environment.apiBase + '/juego/crear/ronda', command);
+  }
+
+  eliminar(command: EliminarJuegoCommand){
+    return this.http.post(environment.apiBase + '/juego/eliminar', command);
   }
 }

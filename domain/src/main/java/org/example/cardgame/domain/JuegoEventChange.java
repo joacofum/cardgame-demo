@@ -62,7 +62,7 @@ public class JuegoEventChange extends EventChange {
         apply((RondaTerminada event) -> {
             juego.ronda = juego.ronda.terminarRonda();
             juego.tablero.inhabilitarApuesta();
-            juego.tablero.reiniciarPartida();
+            //juego.tablero.reiniciarPartida();
         });
 
         apply((CartasAsignadasAJugador event) -> {
@@ -72,6 +72,9 @@ public class JuegoEventChange extends EventChange {
 
         apply((JuegoFinalizado event) -> {
             juego.ganador = juego.jugadores.get(event.getJugadorId());
+        });
+
+        apply((JuegoEliminado event) -> {
         });
     }
 }

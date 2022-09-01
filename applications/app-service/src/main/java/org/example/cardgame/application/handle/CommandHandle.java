@@ -10,6 +10,7 @@ import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
 import static org.springframework.web.reactive.function.server.RequestPredicates.POST;
+import static org.springframework.web.reactive.function.server.RequestPredicates.DELETE;
 import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 @Configuration
@@ -81,4 +82,18 @@ public class CommandHandle {
 
         );
     }
+
+    @Bean
+    public RouterFunction<ServerResponse> eliminarJuego(EliminarJuegoUseCase usecase) {
+        return route(
+                POST("/juego/eliminar").and(accept(MediaType.APPLICATION_JSON)),
+                request -> usecase.andThen(integrationHandle)
+                        .apply(request.bodyToMono(EliminarJuegoCommand.class))
+                        .then(ServerResponse.ok().build())
+                        .onErrorResume(errorHandler::badRequest)
+
+        );
+    }
+
+
 }
