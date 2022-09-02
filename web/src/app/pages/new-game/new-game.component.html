@@ -1,4 +1,3 @@
-
 <!-- <form [formGroup]="form">
   <mat-selection-list formControlName="jugador">
     <mat-list-option *ngFor="let jugador of jugadores" [value]="jugador">
@@ -11,46 +10,39 @@
   </button>
 </form> -->
 
-<!-- <app-header></app-header> -->
-<div class="container-fluid">
-    <div class="row">
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-            <div class="inner-adjust">
+<div class="container">
+  <mat-card class="example-card">
+    <mat-card-header>
+      <mat-card-title class = "cardtitle">Crear Juego</mat-card-title>
+    </mat-card-header>
+    <mat-divider inset></mat-divider>
+    <mat-card-content class = "cardcontent">
+      <mat-form-field>
+        <input type="text" placeholder="Seleccione jugadores" aria-label="Seleccione jugadores"
+        matInput [matAutocomplete]="auto" [formControl]="userControl" #userInput />
+        <mat-hint>Ingrese el nombre del jugador </mat-hint>
+      </mat-form-field>
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let user of filteredUsers | async" [value]="selectedUsers">
+          <div (click)="optionClicked($event, user)">
+            <mat-checkbox [checked]="user.selected" (change)="toggleSelection(user)" (click)="$event.stopPropagation()">
+              {{ user.displayName }} [{{ user.email }}]
+            </mat-checkbox>
+          </div>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-card-content>
+    <mat-divider inset></mat-divider>
+    <mat-card-actions>
+      <label>Jugadores seleccionados:</label>
+      <mat-list dense>
+        <mat-list-item *ngIf="selectedUsers?.length === 0">(None)</mat-list-item>
+        <mat-list-item *ngFor="let user of selectedUsers">
+          {{ user.displayName }} [{{ user.email }}]
+        </mat-list-item>
+      </mat-list>
 
-                <div class="pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Crear Juego</h1>
-                </div>
-                <p>Invite a los jugadores a participar del juego</p>
-                <mat-form-field class="example-full-width">
-                    <input type="text" placeholder="Seleccione jugadores" aria-label="Seleccione jugadores" matInput
-                        [matAutocomplete]="auto" [formControl]="userControl" #userInput>
-                    <mat-hint>Ingrese el nombre del jugador </mat-hint>
-                </mat-form-field>
-
-                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                    <mat-option *ngFor="let user of filteredUsers | async" [value]="selectedUsers">
-                        <div (click)="optionClicked($event, user)">
-                            <mat-checkbox [checked]="user.selected" (change)="toggleSelection(user)"
-                                (click)="$event.stopPropagation()">
-                                {{ user.displayName }} [{{ user.email }}]
-                            </mat-checkbox>
-                        </div>
-                    </mat-option>
-                </mat-autocomplete>
-
-                <br><br>
-
-                <label>Jugadores seleccionados:</label>
-                <mat-list dense>
-                    <mat-list-item *ngIf="selectedUsers?.length === 0">(None)</mat-list-item>
-                    <mat-list-item *ngFor="let user of selectedUsers">
-                        {{ user.displayName }} [{{ user.email }}]
-                    </mat-list-item>
-                </mat-list>
-
-                <button mat-stroked-button color="primary" (click)="crearJuego()">Crear Juego</button>
-            </div>
-        </main>
-
-    </div>
-</div>
+      <button class= "button-marvel" mat-raised-button color="primary" (click)="crearJuego()"> Crear Juego </button>
+    </mat-card-actions>
+  </mat-card>
+  </div>

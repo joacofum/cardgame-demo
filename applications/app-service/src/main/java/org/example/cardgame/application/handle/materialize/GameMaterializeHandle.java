@@ -159,4 +159,6 @@ public class GameMaterializeHandle {
                 Criteria.where("_id").is(event.aggregateRootId())
         );
     }
+
+    
 }

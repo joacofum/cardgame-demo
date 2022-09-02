@@ -1,0 +1,43 @@
+.container{
+  height: 95vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('../../../assets/marvel-supervillains-4k.jpg');
+  background-size: cover;
+}
+
+.example-card {
+  max-width: 400px;
+  align-items: center;
+}
+
+.mat-card-header{
+  display: block;
+
+}
+
+.mat-card{
+  text-align: center;
+}
+
+.button-marvel{
+  background-color: rgb(78, 10, 58);
+}
+
+mat-form-field{
+  width: 400px
+}
+
+mat-card-content{
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+mat-divider{
+  background-color: rgb(78, 10, 58);;
+}
+.mat-card>.mat-divider-horizontal.mat-divider-inset {
+  position: absolute;
+  margin: 0;
+}

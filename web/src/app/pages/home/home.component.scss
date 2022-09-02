@@ -8,9 +8,24 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  background-image: url('../../../assets/marvel_background.jpg');
+  background-size: cover;
 }
 
 .mat-card>.mat-divider-horizontal.mat-divider-inset {
   position: absolute;
   margin: 0;
+}
+
+.mat-card-header{
+  display: block;
+
+}
+
+.mat-card{
+  text-align: center;
+}
+
+.button-marvel{
+  background-color: darkred;
 }

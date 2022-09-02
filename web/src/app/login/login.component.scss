@@ -8,5 +8,6 @@ mat-card {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: bisque;
+  background-image: url('../../assets/starlord.jpg');
+  background-size: cover;
 }

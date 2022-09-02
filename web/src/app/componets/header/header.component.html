@@ -1,10 +1,16 @@
 <mat-toolbar color="warn">
-  <span> Cardgame</span>
+  <img class="manImg" src ="../assets/text-1662076569356.png">
   <span class="example-spacer"></span>
-  <button *ngIf="auth.isLoggedIn;" mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-    <img (click)="menu()" src= {{auth.user.photoURL}} referrerpolicy="no-referrer" alt="Avatar">
+
+  <button *ngIf="auth.isLoggedIn;" mat-icon-button class="example-icon favorite-icon" title = "Menú" aria-label="Example icon-button with heart icon">
+    <img class = "img-round" (click)="menu()" src= {{auth.user.photoURL}} referrerpolicy="no-referrer" alt="Avatar">
   </button>
-  <button *ngIf="auth.isLoggedIn;" mat-icon-button class="example-icon" aria-label="Example icon-button with share icon" >
-    <mat-icon (click)="auth.signOut()">logout</mat-icon>
+
+  <button *ngIf="auth.isLoggedIn;" mat-icon-button class="example-icon" title = "Mi lista de juegos" aria-label="Example icon-button with share icon" >
+    <mat-icon (click)="gameList()"> format_list_numbered</mat-icon>
+  </button>
+
+  <button *ngIf="auth.isLoggedIn;" mat-icon-button class="example-icon" title = "Cerrar sesión" aria-label="Example icon-button with share icon" >
+    <mat-icon  (click)="auth.signOut()">logout</mat-icon>
   </button>
 </mat-toolbar>
