@@ -67,6 +67,27 @@ public class Mazo implements ValueObject<Mazo.Props> {
         );
     }
 
+    public Mazo deshabilitarCarta(Carta cartaADeshabilitar) {
+        //Retornar un nuevo mazo
+        var cartaId = cartaADeshabilitar.value().cartaId().value();
+
+        //Filtrar la carta que se va a deshabilitar, retorna todas las cartas menos la que se va a deshabilitar.
+        Set<Carta> cartas = catas.stream()
+                .filter(
+                        carta -> !cartaId.equals(carta.value().cartaId().value())
+                )
+                .collect(Collectors.toSet());
+
+        //Agregamos la carta con todos los datos que tenía anteriormente pero le cambiamos el valor estaHabilitada a false.
+        cartas.add(new Carta(cartaADeshabilitar.value().cartaId(),
+                cartaADeshabilitar.value().poder(),
+                cartaADeshabilitar.value().estaOculta(),
+                false));
+
+        return new Mazo(cartas);
+
+    }
+
     /**
      * The interface Props.
      */

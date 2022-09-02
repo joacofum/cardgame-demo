@@ -43,7 +43,6 @@ public class QueryHandle {
         );
     }
 
-
     @Bean
     public RouterFunction<ServerResponse> getTablero() {
         return route(

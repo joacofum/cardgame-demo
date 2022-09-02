@@ -48,6 +48,10 @@ public class Jugador extends Entity<JugadorId> {
         mazo = mazo.retirarCarta(carta);
     }
 
+    public void deshabilitarCartaDeMazo(Carta carta) {
+        mazo = mazo.deshabilitarCarta(carta);
+    }
+
     /**
      * Alias string.
      *
