@@ -84,9 +84,9 @@ class PonerCartaEnTableroUseCaseTest {
 
         var event4 = new RondaCreada(
                 new Ronda(1,
-                Set.of(JugadorId.of("Gianni"),
-                        JugadorId.of("Mati"),
-                        JugadorId.of("Joaco"))),
+                Set.of(JugadorId.of("MESSI"),
+                        JugadorId.of("GGGG"),
+                        JugadorId.of("HHHH"))),
                 30);
 
         var event5 = new RondaIniciada();
